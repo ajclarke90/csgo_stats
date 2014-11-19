@@ -71,7 +71,7 @@ class Weapon:
         return hitboxmod
 
     def damagerange_calc_witharmor(self, rangefire, location):
-        damage = self.basedamage * self.penetration/2 * self._hitboxmodifier(location) * self.rangemodifier**(rangefire/float(500))
+        damage = self.basedamage * self.weaponarmorratio/2 * self._hitboxmodifier(location) * self.rangemodifier**(rangefire/float(500))
         return damage
 
     def damagerange_calc_noarmor(self, rangefire, location):
