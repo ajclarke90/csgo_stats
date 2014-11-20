@@ -1,3 +1,7 @@
+
+import numpy as np
+import matplotlib.pyplot as plt
+
 # First set up the axis and figure enviroenmetn
 
 import numpy as np
