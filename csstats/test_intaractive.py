@@ -4,18 +4,18 @@ allowing toggling of lines from the legend.
 """
 import numpy as np
 import matplotlib.pyplot as plt
-import pynbody
 
-s = pynbody.load('run670Diff.01550')
-pynbody.analysis.angmom.faceon(s)
-p = pynbody.analysis.profile.Profile(s.s, min=0.0, max=30, nbins=30)
-q = pynbody.analysis.profile.Profile(s.g, min=0.0, max=30, nbins=30)
+
+t = np.arange(0.0, 0.2, 0.1)
+y1 = 2*np.sin(2*np.pi*t)
+y2 = 4*np.sin(2*np.pi*2*t)
+
 
 
 fig, ax = plt.subplots()
 ax.set_title('Click on legend line to toggle line on/off')
-line1, = ax.plot(p['rbins'], p['density'], lw=2, color='red', label='Stellar Density')
-line2, = ax.plot(q['rbins'], q['density'], lw=2, color='blue', label='Gas Density')
+line1, = ax.plot(t,y1,color='red', label='y1')
+line2, = ax.plot(t, y2, color='blue', label='y2')
 leg = ax.legend(loc='upper right', fancybox=True, shadow=True)
 leg.get_frame().set_alpha(0.4)
 
@@ -45,4 +45,4 @@ def onpick(event):
     fig.canvas.draw()
 
 fig.canvas.mpl_connect('pick_event', onpick)
-plt.semilogy()
+plt.show()
