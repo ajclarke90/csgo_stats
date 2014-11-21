@@ -1,34 +1,36 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import weapons
 
-# First set up the axis and figure enviroenmetn
+MAX_WEAPONS_TO_SHOW = 20
+CS_MAX_RANGE = 2048
 
-import numpy as np
-import matplotlib.pyplot as plt
-
+# First set up the axis and figure environment
 fig, ax = plt.subplots()
 ax.set_title('Click on legend line to toggle line on/off')
 
-linedict = {}
+linearray = []
 for weapon in weapons.weapons[:MAX_WEAPONS_TO_SHOW]:
     xpoints = range(0, CS_MAX_RANGE, 100)
     ypoints = [weapon.damagerange_calc_witharmor(distance, 'chest') for distance in xpoints]
-    linedict[ "{0}".format(weapon.name)], = ax.plot(xpoints,ypoints, label=weapon.name)
+    line, = ax.plot(xpoints,ypoints, label=weapon.name)
+    linearray.append((weapon.name, line))
 
-lines = linedict.values()
+lines = [a[1] for a in linearray]
 leg = ax.legend(loc='upper right', fancybox=True, shadow=True)
 leg.get_frame().set_alpha(0.4)
-lined = dict()
+
+legd = {}
 for legline, origline in zip(leg.get_lines(), lines):
     legline.set_picker(5)  # 5 pts tolerance
-    lined[legline] = origline
+    legd[legline] = origline
 
 def onpick(event):
     # on the pick event, find the orig line corresponding to the
     # legend proxy line, and toggle the visibility
     legline = event.artist
-    origline = lined[legline]
+    origline = legd[legline]
     vis = not origline.get_visible()
     origline.set_visible(vis)
     # Change the alpha on the line in the legend so we can see what lines
