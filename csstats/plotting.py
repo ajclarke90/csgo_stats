@@ -5,7 +5,7 @@ import pdb
 
 
 
-def plot_damage(wtype="pistol", firerange=2048, armor=True, location="head"):
+def plot_damage(wtype="pistol", firerange=5000, armor=True, location="head"):
 
     if wtype not in {w.type for w in weapons.weapons}:
         raise ValueError("{0} not a valid weapon type".format(wtype))
@@ -57,5 +57,15 @@ def plot_damage(wtype="pistol", firerange=2048, armor=True, location="head"):
 
     fig.canvas.mpl_connect('pick_event', onpick)
     plt.plot([0,CS_MAX_RANGE],[100,100], 'r--')
+    plt.plot([800,800],[0,250], 'b--')
+    plt.plot([2050,2050],[0,250], 'b--')
+    ax.annotate('Lethal', xy=(CS_MAX_RANGE/2,101), xycoords='data', color='r')
+    ax.annotate('Doors to Pit', xy=(800,240), xycoords='data',
+    color='b', rotation=-90)
+    ax.annotate('Pit to A Site', xy=(2050,240), xycoords='data',
+    color='b', rotation=-90)
+    plt.xlim(0,CS_MAX_RANGE) # this is here because the plotting decides
+                             # that it need to keep adding in whitespace past
+                             # the lines
 
     return plt
