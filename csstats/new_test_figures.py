@@ -6,7 +6,7 @@ def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
     import pdb
 
     MAX_WEAPONS_TO_SHOW = int(wts)
-    MAX_WEAPONS_TO_SHOW = 5
+    # MAX_WEAPONS_TO_SHOW = 5
     CS_MAX_RANGE = int(firerange) # 2048 is roughly the distance down DD2 long
         # First set up the axis and figure environment
     fig, ax = plt.subplots()
@@ -46,8 +46,7 @@ def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
             legline.set_alpha(1.0)
         else:
             legline.set_alpha(0.2)
-            fig.canvas.draw()
+        fig.canvas.draw()
 
     fig.canvas.mpl_connect('pick_event', onpick)
     plt.show()
-    pdb.set_trace()
