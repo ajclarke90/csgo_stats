@@ -22,7 +22,7 @@ def plot_damage(wtype="pistol", firerange=2048, armor=True, location="head"):
         
         xpoints = range(0, CS_MAX_RANGE, 100)
         
-        if armor == 'yes':
+        if armor:
             ypoints = [weapon.damagerange_calc_witharmor(distance, location) for distance in xpoints]
         else:
             ypoints = [weapon.damagerange_calc_noarmor(distance, location) for distance in xpoints]
