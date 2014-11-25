@@ -6,11 +6,13 @@ def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
     import pdb
 
     MAX_WEAPONS_TO_SHOW = int(wts)
+    MAX_WEAPONS_TO_SHOW = 5
     CS_MAX_RANGE = int(firerange) # 2048 is roughly the distance down DD2 long
-
-    # First set up the axis and figure environment
+        # First set up the axis and figure environment
     fig, ax = plt.subplots()
     ax.set_title('Click on legend line to toggle line on/off')
+    ax.set_xlabel('Range [units]')
+    ax.set_ylabel('Damage [units]')
 
     linearray = []
     for weapon in weapons.weapons[:MAX_WEAPONS_TO_SHOW]:
@@ -19,17 +21,17 @@ def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
             ypoints = [weapon.damagerange_calc_witharmor(distance, location) for distance in xpoints]
         else:
             ypoints = [weapon.damagerange_calc_noarmor(distance, location) for distance in xpoints]
-    line, = ax.plot(xpoints,ypoints, label=weapon.name)
-    linearray.append((weapon.name, line))
 
-    lines = [a[1] for a in linearray]
-    leg = ax.legend(loc='upper right', fancybox=True, shadow=True)
-    leg.get_frame().set_alpha(0.4)
+        line, = ax.plot(xpoints,ypoints, label=weapon.name)
+        linearray.append((weapon.name, line))
+        lines = [a[1] for a in linearray]
+        leg = ax.legend(loc='upper right', fancybox=True, shadow=True)
+        leg.get_frame().set_alpha(0.4)
 
-    legd = {}
-    for legline, origline in zip(leg.get_lines(), lines):
-        legline.set_picker(5)  # 5 pts tolerance
-        legd[legline] = origline
+        legd = {}
+        for legline, origline in zip(leg.get_lines(), lines):
+            legline.set_picker(5)  # 5 pts tolerance
+            legd[legline] = origline
 
     def onpick(event):
         # on the pick event, find the orig line corresponding to the
@@ -48,3 +50,4 @@ def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
 
     fig.canvas.mpl_connect('pick_event', onpick)
     plt.show()
+    pdb.set_trace()
