@@ -59,6 +59,7 @@ class Weapon:
         self.tracerfrequency = float(tracerfrequency)
         self.flinchvelocitymodifierlarge = float(flinchvelocitymodifierlarge)
 
+
     def _hitboxmodifier(self, location):
         if(location == 'head'):
             hitboxmod = 4.00
