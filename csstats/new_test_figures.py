@@ -1,22 +1,27 @@
-def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
+import numpy as np
+import matplotlib.pyplot as plt
+import weapons
+import pdb
 
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import weapons
-    import pdb
-
-    MAX_WEAPONS_TO_SHOW = int(wts)
-    # MAX_WEAPONS_TO_SHOW = 5
+def plot_damage(wtype="pistol", firerange=2048, armor=True, location="head"):
+    
+    if wtype not in {w.type for w in weapons.weapons}:
+        raise ValueError("{0} not a valid weapon type".format(wtype))
+    if location not in ["head", "chest", "stomach", "leg"]:
+        raise ValueError("{0} not a valid hitbox location".format(location))
+    
     CS_MAX_RANGE = int(firerange) # 2048 is roughly the distance down DD2 long
-        # First set up the axis and figure environment
+    # First set up the axis and figure environment
     fig, ax = plt.subplots()
     ax.set_title('Click on legend line to toggle line on/off')
     ax.set_xlabel('Range [units]')
     ax.set_ylabel('Damage [units]')
 
     linearray = []
-    for weapon in weapons.weapons[:MAX_WEAPONS_TO_SHOW]:
+    for weapon in [w for w in weapons.weapons if w.type == wtype]:
+        
         xpoints = range(0, CS_MAX_RANGE, 100)
+        
         if armor == 'yes':
             ypoints = [weapon.damagerange_calc_witharmor(distance, location) for distance in xpoints]
         else:
@@ -49,4 +54,9 @@ def plot_damage(wts="5", firerange="2048", armor="yes", location="head"):
         fig.canvas.draw()
 
     fig.canvas.mpl_connect('pick_event', onpick)
-    plt.show()
+    return plt
+
+pistols = plot_damage(wtype="pistol", firerange=2048, armor=True, location="head")
+pistols.show()
+rifles = plot_damage(wtype="rifle", firerange=2048, armor=True, location="head")
+rifles.show()
