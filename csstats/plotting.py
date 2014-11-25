@@ -54,9 +54,6 @@ def plot_damage(wtype="pistol", firerange=2048, armor=True, location="head"):
         fig.canvas.draw()
 
     fig.canvas.mpl_connect('pick_event', onpick)
-    return plt
+    plt.plot([0,CS_MAX_RANGE],[100,100], 'r-')
 
-pistols = plot_damage(wtype="pistol", firerange=2048, armor=True, location="head")
-pistols.show()
-rifles = plot_damage(wtype="rifle", firerange=2048, armor=True, location="head")
-rifles.show()
+    return plt
